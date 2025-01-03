@@ -18,7 +18,7 @@ const StepTwo: React.FC = () => {
       {/* Circle with Number */}
       <div className="basis-1/4 flex justify-top gap-4">
         <Bs2Circle className="text-4xl text-gray-400" />
-        <p className="text-xl font-bold text-gray-300">Step 2: <br />Results upload</p>
+        <p className="text-xl font-bold text-gray-100">Step 2: <br />Results upload</p>
       </div>
 
       {/* Form Inputs */}
