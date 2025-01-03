@@ -4,7 +4,7 @@ import React from 'react'
 
 const Footer = () => {
   return (
-    <footer className="text-gray-400 text-center p-4">
+    <footer className="text-gray-400 text-center p-4 w-full">
       <p>
         Developed by{" "}
         <a

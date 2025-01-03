@@ -10,7 +10,7 @@ export default function Home() {
       </div>
 
       {/* Footer */}
-      <Footer className="w-full" />
+      <Footer />
     </div>
   );
 }
