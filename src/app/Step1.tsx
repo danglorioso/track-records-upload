@@ -13,7 +13,7 @@ const StepOne: React.FC = () => {
   const [url, setUrl] = useState("");
 
   return (
-    <div className="flex flex-col md:flex-row items-start bg-gray-800 text-white rounded-lg p-6 shadow-md gap-6">
+    <div className="flex flex-col md:flex-row items-start bg-gray-800 text-white rounded-lg p-6 gap-6">
       {/* Circle with Number */}
       <div className="basis-1/4 flex justify-top gap-4">
         <Bs1Circle className="text-4xl text-gray-400" />
