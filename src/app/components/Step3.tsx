@@ -1,18 +1,8 @@
 'use client';
 
-import { useState } from "react";
 import { Bs3Circle } from "react-icons/bs";
 
 const StepThree: React.FC = () => {
-  // Store state of uploaded file
-  const [file, setFile] = useState<File | null>(null); 
-
-  // Handle file selection
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.target.files ? e.target.files[0] : null;
-    setFile(selectedFile);
-  };
-
   return (
     <div className="flex flex-col md:flex-row items-start bg-gray-800 text-white rounded-lg p-6 gap-6">
       {/* Circle with Number */}
