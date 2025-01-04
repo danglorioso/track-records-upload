@@ -18,28 +18,14 @@ const StepThree: React.FC = () => {
       {/* Circle with Number */}
       <div className="basis-1/4 flex justify-top gap-4">
         <Bs3Circle className="text-4xl text-gray-400" />
-        <p className="text-xl font-bold text-gray-100">Step 2: <br />Results upload</p>
+        <p className="text-xl font-bold text-gray-100">Step 3: <br />Run!</p>
       </div>
 
       {/* Form Inputs */}
       <div className="flex flex-col gap-4 flex-grow basis-3/4">
-        {/* File Upload */}
-        <div>
-          <label htmlFor="file-upload" className="block text-md font-medium text-gray-400">
-            Upload Results
-          </label>
-          <input
-            type="file"
-            id="file-upload"
-            onChange={handleFileChange}
-            className="w-full mt-1 p-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          {file && (
-            <p className="text-sm text-gray-300 mt-2">
-              {file.name} selected
-            </p>
-          )}
-        </div>
+        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
+          Submit
+        </button>
       </div>
     </div>
   );
