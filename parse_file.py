@@ -26,13 +26,30 @@ def normalize_event(event_name: str) -> str:
     Returns:
         str: The standardized event name if a match is found, otherwise the original name.
     """
+    
+    # Initialize best match and score
+    best_match = ""
+    best_score = 0
+
     for standard_event, alternatives in STANDARD_EVENTS.items():
         # Combine standard event and alternatives for fuzzy matching
         possible_matches = [standard_event] + alternatives
-        best_match, score = process.extractOne(event_name, possible_matches, scorer=fuzz.partial_ratio)
-        if score > 85:  # Threshold for a valid match
-            return standard_event
-    return event_name  # Return original if no match is found
+        result = process.extractOne(event_name, possible_matches)
+        
+        # If score is higher than previous best, update best match and score
+        if result[1] > best_score:
+            best_match = result[0]
+            best_score = result[1]
+
+    # At end of loop, return best match if score is above threshold
+    if best_score > 85:
+        print("Returning best match: ")
+        print(best_match)
+        return best_match
+    
+     # Return original if no match is found
+    return event_name 
+
 
 # Define standardized school names and alternatives
 STANDARD_SCHOOLS = {
@@ -59,18 +76,24 @@ def normalize_school(school_name: str) -> str:
     for standard_school, alternatives in STANDARD_SCHOOLS.items():
         # Combine standard school and alternatives for fuzzy matching
         possible_matches = [standard_school] + alternatives
-        best_match, score = process.extractOne(school_name, possible_matches, scorer=fuzz.partial_ratio)
-        if score > 90:  # Threshold for a valid match
-            return standard_school
+        result = process.extractOne(school_name, possible_matches, scorer=fuzz.partial_ratio)
+
+        print("Result from normalizing school name")
+        print(result)
+
+
+        # if score > 90:  # Threshold for a valid match
+        #     return standard_school
     return school_name  # Return original if no match is found
 
 def parse_results(file_path: str, metadata: Dict[str, str]) -> None:
     """
-    Parse the track meet results and generate a structured CSV.
+    Main function for parsing the track meet results and generate a structured CSV.
     
     Args:
         file_path (str): Path to the input text file.
-        metadata (Dict[str, str]): Dictionary of constant metadata to include in each row.
+        metadata (Dict[str, str]): Dictionary of constant metadata to include
+            in each row that was inputted on web app upon file upload. 
     """
     # Define output columns
     columns = [
@@ -166,7 +189,7 @@ if __name__ == "__main__":
         "Name": "Sample Meet",
         "Timing": "FAT",
         "URL": "http://example.com",
-        "Season": "Indoor 2023"
+        "Season": "Indoor"
     }
     
     # Parse file
