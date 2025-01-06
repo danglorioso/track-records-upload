@@ -9,7 +9,7 @@ from rapidfuzz import fuzz, process
 from standard_events import STANDARD_EVENTS
 from standard_schools import STANDARD_SCHOOLS
 
-def normalize_event(event_name: str) -> str:
+def normalize_event(event_name: str, review_bool: bool) -> str:
     """
     Normalize the event name to the closest standardized name using fuzzy matching.
     
@@ -37,12 +37,12 @@ def normalize_event(event_name: str) -> str:
     # At end of loop, return best match if score is above threshold (85)
     if best_score > 85:
         print(best_match)
-        return best_match
+        return best_match, review_bool
     else :
         # Return original if no close match found
-        return event_name
+        return event_name, True
 
-def normalize_school(school_name: str) -> str:
+def normalize_school(school_name: str, review_bool: bool) -> str:
     """
     Normalize the school name to the closest standardized name using fuzzy matching.
     
@@ -68,10 +68,10 @@ def normalize_school(school_name: str) -> str:
 
     # At end of loop, return best match if score is above threshold (85)
     if best_score > 85:
-        return best_match
+        return best_match, review_bool
     else:
         # Return original if no close match found
-        return school_name
+        return school_name, True
 
 def parse_results(file_path: str, metadata: Dict[str, str]) -> None:
     """
@@ -80,7 +80,7 @@ def parse_results(file_path: str, metadata: Dict[str, str]) -> None:
     Args:
         file_path (str): Path to the input text file.
         metadata (Dict[str, str]): Dictionary of constant metadata to include
-            in each row that was inputted on web app upon file upload. 
+            in each row that was inputted on web app upon file upload.
     """
     # Define output columns
     columns = [
@@ -97,19 +97,32 @@ def parse_results(file_path: str, metadata: Dict[str, str]) -> None:
     finals_pattern = re.compile(r"Finals")
     gender_map = {"Girls": "F", "Boys": "M"}
     
+    # Initialize variables to store current
     current_event = ""
     current_gender = ""
     current_round = ""
 
     try:
+        # Open file for reading
         with open(file_path, "r") as file:
+
+            # Iterate through each line in the file
             for line in file:
-                # Match event header
+                # Reset review flag
+                review_bool = False
+
+                # Check if line specifies event
                 event_match = event_pattern.search(line)
+
+                # Event detected
                 if event_match:
+
+                    # Extract gender from event line
                     current_gender = gender_map[event_match.group(1)]
+
+                    # Extract and normalize event name
                     raw_event_name = event_match.group(2).strip()
-                    current_event = normalize_event(raw_event_name)  # Normalize event name
+                    current_event, review_bool = normalize_event(raw_event_name, review_bool)
                     continue
                 
                 # Detect finals round
@@ -119,10 +132,17 @@ def parse_results(file_path: str, metadata: Dict[str, str]) -> None:
                 
                 # Match individual results
                 result_match = result_pattern.search(line)
+
+                # Result detected
                 if result_match:
+                    # Extract result fields
                     place, full_name, grade, school, mark = result_match.groups()
+
+                    # Parse full name into last and first names
                     last_name, first_name = parse_name(full_name)
-                    normalized_school = normalize_school(school.strip())
+
+                    # Normalize school name
+                    normalized_school, review_bool = normalize_school(school.strip(), review_bool)
                     rows.append({   
                         "Event": current_event,
                         "Round": current_round or "Prelim",
@@ -136,7 +156,7 @@ def parse_results(file_path: str, metadata: Dict[str, str]) -> None:
                         "Heat": "",
                         "Wind": "",
                         "Points": "",
-                        "Review": "FALSE"  # Mark TRUE for missing or invalid fields
+                        "Review": review_bool  # Mark TRUE for missing or invalid fields
                     })
     except FileNotFoundError:
         print(f"Error: File {file_path} not found.")
@@ -165,6 +185,11 @@ def parse_name(full_name: str):
     return full_name, ""
 
 if __name__ == "__main__":
+    '''
+    Main function to parse the results file.
+    '''
+
+    # Check for file path argument
     if len(sys.argv) < 2:
         print("Usage: python3 parse_file.py <results_file>")
         sys.exit(1)
@@ -179,7 +204,6 @@ if __name__ == "__main__":
         "URL": "http://example.com",
         "Season": "Indoor"
     }
-    
-    # Parse file
-    parse_results(sys.argv[1], metadata)
 
+    # Call main function to parse results
+    parse_results(sys.argv[1], metadata)

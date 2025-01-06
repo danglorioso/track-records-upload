@@ -14,6 +14,7 @@
 /coverage
 test_results.txt
 small_test_results.txt
+output.csv
 
 # next.js
 /.next/
