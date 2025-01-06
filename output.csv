@@ -1,1 +1,32 @@
-Event,Round,Gender,Place,Last Name,First Name,Grade,School,Mark,Heat,Wind,Points,Review
+Meet Date,Edition,Meet Name,Meet Location,Season,URL,Timing,Event,Round,Gender,Place,Last Name,First Name,Grade,School,Mark,Heat,Wind,Points,Review
+2023-01-01,1st,Sample Meet,Sample Location,Indoor,http://example.com,FAT,55HH,Prelim,F,1,Gonet,Alexandra,12,Pope Francis,1,,,,FALSE
+2023-01-01,1st,Sample Meet,Sample Location,Indoor,http://example.com,FAT,55HH,Prelim,F,2,Lynch,Chelsea,12,Amesbury,2,,,,FALSE
+2023-01-01,1st,Sample Meet,Sample Location,Indoor,http://example.com,FAT,55HH,Prelim,F,3,Fitzpatrick,Gwyneth,11,Hamilton-Wenham,4,,,,FALSE
+2023-01-01,1st,Sample Meet,Sample Location,Indoor,http://example.com,FAT,55HH,Prelim,F,4,Allard,Alexia,10,Murdock,8.957,,,,FALSE
+2023-01-01,1st,Sample Meet,Sample Location,Indoor,http://example.com,FAT,55HH,Prelim,F,5,Condon,Mackenzie,12,Marthas Vine              8.96q  2,8.960,,,,FALSE
+2023-01-01,1st,Sample Meet,Sample Location,Indoor,http://example.com,FAT,55HH,Prelim,F,6,Hiltz,Bianca,12,Southwick,3,,,,FALSE
+2023-01-01,1st,Sample Meet,Sample Location,Indoor,http://example.com,FAT,55HH,Prelim,F,7,Rahilly,Emma,12,South Hadley,9.108,,,,FALSE
+2023-01-01,1st,Sample Meet,Sample Location,Indoor,http://example.com,FAT,55HH,Prelim,F,8,Green,Amber,11,Lunenburg,9.110,,,,FALSE
+2023-01-01,1st,Sample Meet,Sample Location,Indoor,http://example.com,FAT,55HH,Prelim,F,9,Silva,Allison,10,Adv. Math an              9.16,4,,,,FALSE
+2023-01-01,1st,Sample Meet,Sample Location,Indoor,http://example.com,FAT,55HH,Prelim,F,10,Esty,Maia,11,Amesbury,4,,,,FALSE
+2023-01-01,1st,Sample Meet,Sample Location,Indoor,http://example.com,FAT,55HH,Prelim,F,11,Vinkels,Juliana,11,Adv. Math an              9.27,3,,,,FALSE
+2023-01-01,1st,Sample Meet,Sample Location,Indoor,http://example.com,FAT,55HH,Prelim,F,12,Doolittle,Maddie,11,South Hadley,1,,,,FALSE
+2023-01-01,1st,Sample Meet,Sample Location,Indoor,http://example.com,FAT,55HH,Prelim,F,13,Banach,Elle,9,Ursuline Academy,4,,,,FALSE
+2023-01-01,1st,Sample Meet,Sample Location,Indoor,http://example.com,FAT,55HH,Prelim,F,14,Harrington,Jessie,12,Ipswich,3,,,,FALSE
+2023-01-01,1st,Sample Meet,Sample Location,Indoor,http://example.com,FAT,55HH,Prelim,F,15,Labrie,Hannah,12,Hampshire,2,,,,FALSE
+2023-01-01,1st,Sample Meet,Sample Location,Indoor,http://example.com,FAT,55HH,Prelim,F,16,Kehoe,Dallis,12,Norwell,2,,,,FALSE
+2023-01-01,1st,Sample Meet,Sample Location,Indoor,http://example.com,FAT,55HH,Prelim,F,17,Turner,Jordan,11,Carver,4,,,,FALSE
+2023-01-01,1st,Sample Meet,Sample Location,Indoor,http://example.com,FAT,55HH,Prelim,F,18,MacSweeney,Erica,12,Archbishop W              9.50,3,,,,FALSE
+2023-01-01,1st,Sample Meet,Sample Location,Indoor,http://example.com,FAT,55HH,Prelim,F,19,Bouchard,Briahna,10,Murdock,3,,,,FALSE
+2023-01-01,1st,Sample Meet,Sample Location,Indoor,http://example.com,FAT,55HH,Prelim,F,20,Souphida,Arouny,11,Douglas,1,,,,FALSE
+2023-01-01,1st,Sample Meet,Sample Location,Indoor,http://example.com,FAT,55HH,Prelim,F,21,Tormey,Devin,12,Lunenburg,2,,,,FALSE
+2023-01-01,1st,Sample Meet,Sample Location,Indoor,http://example.com,FAT,55HH,Prelim,F,22,Morris,Madison,12,Amesbury,4,,,,FALSE
+2023-01-01,1st,Sample Meet,Sample Location,Indoor,http://example.com,FAT,55HH,Prelim,F,23,Lawrence,Nicole,10,Lunenburg,2,,,,FALSE
+2023-01-01,1st,Sample Meet,Sample Location,Indoor,http://example.com,FAT,55HH,Prelim,F,24,Ikeda,Sophie,9,Holy Name Ce              9.88   1,9.872,,,,FALSE
+2023-01-01,1st,Sample Meet,Sample Location,Indoor,http://example.com,FAT,55HH,Prelim,F,25,Desameau,Lindsey,12,Stoneham,9.873,,,,FALSE
+2023-01-01,1st,Sample Meet,Sample Location,Indoor,http://example.com,FAT,55HH,Prelim,F,26,Cronin,Ceara,11,Amesbury,9.880,,,,FALSE
+2023-01-01,1st,Sample Meet,Sample Location,Indoor,http://example.com,FAT,55HH,Prelim,F,27,Clark,Riley,10,Millbury,1,,,,FALSE
+2023-01-01,1st,Sample Meet,Sample Location,Indoor,http://example.com,FAT,55HH,Prelim,F,28,Okoye,Jada,12,Saugus,10.171,,,,FALSE
+2023-01-01,1st,Sample Meet,Sample Location,Indoor,http://example.com,FAT,55HH,Prelim,F,29,Schleinitz,Madeleine,12,Uxbridge,10.178,,,,FALSE
+2023-01-01,1st,Sample Meet,Sample Location,Indoor,http://example.com,FAT,55HH,Prelim,F,30,Martellio,Morgan,11,Uxbridge,3,,,,FALSE
+2023-01-01,1st,Sample Meet,Sample Location,Indoor,http://example.com,FAT,55HH,Prelim,F,31,Zanelli,Daniella,12,Winthrop,2,,,,FALSE

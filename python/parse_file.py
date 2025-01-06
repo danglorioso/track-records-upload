@@ -6,83 +6,8 @@ import sys
 from typing import List, Dict
 from rapidfuzz import fuzz, process
 
-# Define standardized event names and alternatives
-STANDARD_EVENTS = {
-    "50y": ["50 yard"],
-    "55m": ["55 meter", "55meter", "55 m", "55 meter dash", "55 m dash", "55m dash", "55"],
-    "55HH": ["55m hurdles", "55 meter hurdles", "55 meter high hurdles"],
-    "60y": ["60 yard"],
-    "60m": ["60 meter"],
-    "80ydLH": ["80 yard hurdles", "80 yard low hurdles"],
-    "100y": ["100 yard"],
-    "100m": ["100 meter"],
-    "100HH": ["100 meter hurdles"],
-    "110HH": ["100m hurdles"],
-    "120ydHH": ["120 yard hurdles", "120 yard high hurdles"],
-    "180ydLH": ["180 yard low hurdles"],
-    "200m": ["200 meter"],
-    "220yd": ["220 yard"],
-    "300yd": ["300 yard"],
-    "300m": ["300 meter"],
-    "300LH": ["300 meter low hurdles"],
-    "330ydLH": ["330 yard low hurdles"],
-    "400m": ["400m hurdles"],
-    "440yd": ["440 yard"],
-    "400LH": ["400 meter low hurdles"],
-    "800m": ["800 meter"],
-    "880yd": ["880 yard"],
-    "1000yd": ["1000 yard"],
-    "1000m": ["1000 meter"],
-    "1500m": ["1500 meter"],
-    "1600m": ["1600 meter"],
-    "1 mile": ["1 mile"],
-    "3000m": [],
-    "3000m SC": [],
-    "3200m": [],
-    "2 mile": ["2 miles"],
-    "5000m": [],
-    "Shot Put": [],
-    "Discus": [],
-    "Javelin": [],
-    "Javelin (Old)": [],
-    "Turbo Javelin": [],
-    "Weight Throw": [],
-    "Hammer Throw": [],
-    "High Jump": [],
-    "Pole Vault": [],
-    "Long Jump": [],
-    "Triple Jump": [],
-    "4x50yd": [],
-    "4x50HH": [],
-    "4x100m": ["4x100 relay"],
-    "4x110yd": [],
-    "4x200": ["4x200 meter relay", "4x200 meter"],
-    "4x220yd": [],
-    "4x400m": [],
-    "4x440yd": ["4x400 yard relay", "1600 yard relay", "1 mile relay"],
-    "4x800m": [],
-    "4x880yd": [],
-    "4x1 mile": ["4x1mile"],
-    "4x1600m": [],
-    "DMR 4000m": [],
-    "SMR 800m": [],
-    "SMR 1600m": [],
-    "3x HJ": ["3x High Jump"],
-    "3x PV": ["3x Pole Vault"],
-    "3x LJ": ["3x Long Jump"],
-    "3x TJ": ["3x Triple Jump"],
-    "3x SP": ["3x Shot Put"],
-    "3x Disc": ["3x Discus"],
-    "3x Jav": ["3x Javelin"],
-    "3x Turbo Jav": ["3x Turbo Javelin"],
-    "4x110mHH": ["4x110m Shuttle Hurdle", "4x110 meter Shuttle Hurdle"],
-    "4x100mHH": ["4x100m Shuttle Hurdle", "4x100 meter Shuttle Hurdle"],
-    "4x120ydHH": [],
-    "Pentathlon": ["Pent"],
-    "Heptathlon": ["Hepta"],
-    "Decathlon": ["Deca"],
-    "Weight Pent": ["Weight Pentathlon"]
-}
+from standard_events import STANDARD_EVENTS
+from standard_schools import STANDARD_SCHOOLS
 
 def normalize_event(event_name: str) -> str:
     """
@@ -95,7 +20,7 @@ def normalize_event(event_name: str) -> str:
         str: The standardized event name if a match is found, otherwise the original name.
     """
 
-    # Initialize best match and score
+    # Initialize best match and score variables
     best_match = ""
     best_score = 0
 
@@ -103,8 +28,9 @@ def normalize_event(event_name: str) -> str:
         # Combine standard event and alternatives for fuzzy matching
         possible_matches = [standard_event] + alternatives
         result = process.extractOne(event_name, possible_matches)
-        
-        # If score is higher than previous best, update best match and score
+
+        # If score is higher than previous best, update with standardized
+        # event name and score
         if result[1] > best_score:
             best_match, best_score = standard_event, result[1]
 
@@ -112,22 +38,9 @@ def normalize_event(event_name: str) -> str:
     if best_score > 85:
         print(best_match)
         return best_match
-    
-    # Return original if no close-enough match found
-    return event_name
-
-
-# Define standardized school names and alternatives
-STANDARD_SCHOOLS = {
-    "Abby Kelley": [],
-    "Abington": [],
-    "NDA-Tyngsboro": ["Notre Dame Academy Tyngsboro", "NDA Tyngsboro"],
-    "Advanced Math & Science Academy Charter": ["AMSA"],
-    "Chicopee Comprehensive": ["Chicopee Comp"],
-    "Littleton": ["Littleton HS", "Littleton High School", "LITT"],
-    "Mt Everett": ["Mount Everett"],
-    # Add remaining schools here...
-}
+    else :
+        # Return original if no close match found
+        return event_name
 
 def normalize_school(school_name: str) -> str:
     """
@@ -139,17 +52,26 @@ def normalize_school(school_name: str) -> str:
     Returns:
         str: The standardized school name if a match is found, otherwise the original name.
     """
+    # Initialize best match and score variables
+    bset_match = ""
+    best_score = 0
+
     for standard_school, alternatives in STANDARD_SCHOOLS.items():
         # Combine standard school and alternatives for fuzzy matching
         possible_matches = [standard_school] + alternatives
         result = process.extractOne(school_name, possible_matches, scorer=fuzz.partial_ratio)
 
-        # print("Result from normalizing school name")
-        # print(result)
+        # If score is higher than previous best, update with standardized 
+        # school name and score
+        if result[1] > best_score:
+            best_match, best_score = standard_school, result[1]
 
-        # if score > 90:  # Threshold for a valid match
-        #     return standard_school
-    return school_name  # Return original if no match is found
+    # At end of loop, return best match if score is above threshold (85)
+    if best_score > 85:
+        return best_match
+    else:
+        # Return original if no close match found
+        return school_name
 
 def parse_results(file_path: str, metadata: Dict[str, str]) -> None:
     """
@@ -162,7 +84,8 @@ def parse_results(file_path: str, metadata: Dict[str, str]) -> None:
     """
     # Define output columns
     columns = [
-        "Event", "Round", "Gender", "Place", "Last Name", "First Name",
+        "Meet Date", "Edition", "Meet Name", "Meet Location", "Season", "URL", 
+        "Timing", "Event", "Round", "Gender", "Place", "Last Name", "First Name",
         "Grade", "School", "Mark", "Heat", "Wind", "Points", "Review"
     ]
     
@@ -249,9 +172,9 @@ if __name__ == "__main__":
     # Example metadata
     metadata = {
         "Meet Date": "2023-01-01",
-        "Location": "Sample Location",
+        "Meet Location": "Sample Location",
         "Edition": "1st",
-        "Name": "Sample Meet",
+        "Meet Name": "Sample Meet",
         "Timing": "FAT",
         "URL": "http://example.com",
         "Season": "Indoor"
@@ -260,14 +183,3 @@ if __name__ == "__main__":
     # Parse file
     parse_results(sys.argv[1], metadata)
 
-
-# def main():
-#     print("Hello World")
-
-
-#     with open("test_results.txt", "r") as file:
-#         for line in file:
-#             print(line)
-
-# if __name__ == "__main__":
-#     main()
