@@ -15,6 +15,7 @@ def normalize_event(event_name: str, review_bool: bool) -> str:
     
     Args:
         event_name (str): The event name to normalize.
+        review_bool (bool): The review flag to mark if the event name is missing or invalid.
     
     Returns:
         str: The standardized event name if a match is found, otherwise the original name.
@@ -48,6 +49,7 @@ def normalize_school(school_name: str, review_bool: bool) -> str:
     
     Args:
         school_name (str): The school name to normalize.
+        review_bool (bool): The review flag to mark if the school name is missing or invalid.
     
     Returns:
         str: The standardized school name if a match is found, otherwise the original name.
@@ -82,6 +84,7 @@ def parse_results(file_path: str, metadata: Dict[str, str]) -> None:
         metadata (Dict[str, str]): Dictionary of constant metadata to include
             in each row that was inputted on web app upon file upload.
     """
+    
     # Define output columns
     columns = [
         "Meet Date", "Edition", "Meet Name", "Meet Location", "Season", "URL", 
@@ -93,7 +96,16 @@ def parse_results(file_path: str, metadata: Dict[str, str]) -> None:
 
     # Patterns for parsing
     event_pattern = re.compile(r"Event\s+\d+\s+(Boys|Girls)\s+(.+)")
-    result_pattern = re.compile(r"(\d+)\s+([\w\-\'\.]+\s[\w\-\'\.]+)\s+(\d+)?\s+([\w\s\-\'\.]+)\s+([\d\.]+)")
+    result_pattern = re.compile(
+        r"(\d+)\s+"                        # Place number (integer)
+        r"([\w\-\'\.]+(?:\s[\w\-\'\.]+)?)\s+"  # Name (first and last)
+        r"(\d+)?\s+"                       # Grade level (optional integer)
+        r"([\w\s\-\'\.]+?)\s+"             # School (string, non-greedy to stop at "mark")
+        r"([\d\.]+)q?\s+"                  # Mark (time as decimal, optionally ending in 'q')
+        r"(\d+)?\s*"                       # Heat (optional integer)
+        r"(\d+\.\d+)?\s*"                  # Optional unrounded times (decimal)
+        r"(\d+)?\s*"                       # Optional wind/points numbers (integer)
+    )
     finals_pattern = re.compile(r"Finals")
     gender_map = {"Girls": "F", "Boys": "M"}
     
@@ -136,7 +148,12 @@ def parse_results(file_path: str, metadata: Dict[str, str]) -> None:
                 # Result detected
                 if result_match:
                     # Extract result fields
-                    place, full_name, grade, school, mark = result_match.groups()
+                    place, full_name, grade, school, mark, heat, wind, points = result_match.groups()
+                    print("Place: ", place)
+                    print("Full Name: ", full_name)
+                    print("Grade: ", grade)
+                    print("School: ", school)
+                    print("Mark: ", mark)
 
                     # Parse full name into last and first names
                     last_name, first_name = parse_name(full_name)
@@ -153,10 +170,10 @@ def parse_results(file_path: str, metadata: Dict[str, str]) -> None:
                         "Grade": grade or "",
                         "School": normalized_school,
                         "Mark": mark,
-                        "Heat": "",
-                        "Wind": "",
+                        "Heat": heat or "",
+                        "Wind": wind or "",
                         "Points": "",
-                        "Review": review_bool  # Mark TRUE for missing or invalid fields
+                        "Review": review_bool
                     })
     except FileNotFoundError:
         print(f"Error: File {file_path} not found.")
@@ -178,11 +195,27 @@ def parse_results(file_path: str, metadata: Dict[str, str]) -> None:
 def parse_name(full_name: str):
     """
     Split a full name into last and first names.
+    
+    Handles both formats:
+    - 'last name, first name'
+    - 'first name last name'
+    
+    Args:
+        full_name (str): The full name to parse.
+        
+    Returns:
+        tuple: (last_name, first_name)
     """
-    parts = full_name.split()
-    if len(parts) > 1:
-        return parts[-1], " ".join(parts[:-1])
-    return full_name, ""
+    # Check if the name contains a comma (last name, first name format)
+    if ',' in full_name:
+        # Remove leading and trailing whitespace and split by the comma
+        last_name, first_name = full_name.split(',', 1)
+        return last_name.strip(), first_name.strip()
+    else:
+        # Split by spaces for first name last name format
+        parts = full_name.split()
+        if len(parts) > 1:
+            return parts[-1], " ".join(parts[:-1])
 
 if __name__ == "__main__":
     '''
