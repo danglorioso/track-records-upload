@@ -98,7 +98,7 @@ def parse_results(file_path: str, metadata: Dict[str, str]) -> None:
     event_pattern = re.compile(r"Event\s+\d+\s+(Boys|Girls)\s+(.+)")
     result_pattern = re.compile(
         r"(\d+)\s+"                        # Place number (integer)
-        r"([\w\-\'\.]+(?:\s[\w\-\'\.]+)?)\s+"  # Name (first and last)
+        r"([\w\-\'\.]+(?:\s[\w\-\'\.]+){0,2})\s+"  # Name (first and last)
         r"(\d+)?\s+"                       # Grade level (optional integer)
         r"([\w\s\-\'\.]+?)\s+"             # School (string, non-greedy to stop at "mark")
         r"([\d\.]+)q?\s+"                  # Mark (time as decimal, optionally ending in 'q')
@@ -149,11 +149,6 @@ def parse_results(file_path: str, metadata: Dict[str, str]) -> None:
                 if result_match:
                     # Extract result fields
                     place, full_name, grade, school, mark, heat, wind, points = result_match.groups()
-                    print("Place: ", place)
-                    print("Full Name: ", full_name)
-                    print("Grade: ", grade)
-                    print("School: ", school)
-                    print("Mark: ", mark)
 
                     # Parse full name into last and first names
                     last_name, first_name = parse_name(full_name)
@@ -172,7 +167,7 @@ def parse_results(file_path: str, metadata: Dict[str, str]) -> None:
                         "Mark": mark,
                         "Heat": heat or "",
                         "Wind": wind or "",
-                        "Points": "",
+                        "Points": points or "",
                         "Review": review_bool
                     })
     except FileNotFoundError:
@@ -214,8 +209,10 @@ def parse_name(full_name: str):
     else:
         # Split by spaces for first name last name format
         parts = full_name.split()
+
+        # Return the first name as the first word and last name as everything else
         if len(parts) > 1:
-            return parts[-1], " ".join(parts[:-1])
+            return " ".join(parts[1:]), parts[0]
 
 if __name__ == "__main__":
     '''
