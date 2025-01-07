@@ -97,18 +97,22 @@ def parse_results(file_path: str, metadata: Dict[str, str]) -> None:
     # Patterns for parsing
     event_pattern = re.compile(r"Event\s+\d+\s+(Boys|Girls)\s+(.+)")
     result_pattern = re.compile(
-        r"(\d+)\s+"                        # Place number (integer)
-        r"([\w\-\'\.]+(?:\s[\w\-\'\.]+){0,2})\s+"  # Name (first and last)
-        r"(\d+)?\s+"                       # Grade level (optional integer)
-        r"([\w\s\-\'\.]+?)\s+"             # School (string, non-greedy to stop at "mark")
-        r"([\d\.]+)q?\s+"                  # Mark (time as decimal, optionally ending in 'q')
-        r"(\d+)?\s*"                       # Heat (optional integer)
-        r"(\d+\.\d+)?\s*"                  # Optional unrounded times (decimal)
-        r"(\d+)?\s*"                       # Optional wind/points numbers (integer)
+        r"(\d+)\s+"                              # Place number (integer)
+        r"([\w\-\'\.]+(?:\s[\w\-\'\.]+){0,2})\s+"  # Name (first and last, up to three words)
+        r"(\d+)?\s+"                             # Grade level (optional integer)
+        r"([\w\s\-\'\.]+?)\s+"                   # School (string, non-greedy to stop at "mark")
+        r"((?:\d{1,2}:\d{2}\.\d{2}|\d{1,2}\.\d{2})[q*]?)\s+"  # Mark (##.## or #:##.##, optionally ending in 'q' or '*')
+        r"(\d+)?\s*"                             # Heat (optional integer)
+        r"(\d+\.\d+)?\s*"                        # Optional unrounded times (decimal)
+        r"(\d+)?\s*"                             # Optional wind/points numbers (integer)
     )
+
     finals_pattern = re.compile(r"Finals")
     gender_map = {"Girls": "F", "Boys": "M"}
     
+    # Define distance events
+    distance_events = {"shot put", "discus", "high jump", "long jump", "triple jump", "pole vault", "javelin"}
+
     # Initialize variables to store current
     current_event = ""
     current_gender = ""
@@ -135,6 +139,13 @@ def parse_results(file_path: str, metadata: Dict[str, str]) -> None:
                     # Extract and normalize event name
                     raw_event_name = event_match.group(2).strip()
                     current_event, review_bool = normalize_event(raw_event_name, review_bool)
+                    
+                    # Skip parsing if the event is a distance event
+                    if any(event in raw_event_name for event in distance_events):
+                        print(f"Skipping distance event: {current_event}")
+                        current_event = None  # Clear current event for skipped events
+                        continue
+                    
                     continue
                 
                 # Detect finals round
@@ -151,10 +162,15 @@ def parse_results(file_path: str, metadata: Dict[str, str]) -> None:
                     place, full_name, grade, school, mark, heat, wind, points = result_match.groups()
 
                     # Parse full name into last and first names
-                    last_name, first_name = parse_name(full_name)
+                    if len(full_name.split()) > 1:
+                        last_name, first_name = parse_name(full_name)
+
+                    print(f"Place: {place}, Name: {full_name}, Grade: {grade}, School: {school}, Mark: {mark}, Heat: {heat}, Wind: {wind}, Points: {points}")
 
                     # Normalize school name
                     normalized_school, review_bool = normalize_school(school.strip(), review_bool)
+                    
+                    # Append row to results
                     rows.append({   
                         "Event": current_event,
                         "Round": current_round or "Prelim",
