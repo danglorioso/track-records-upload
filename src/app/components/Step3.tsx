@@ -1,8 +1,22 @@
 'use client';
 
 import { Bs3Circle } from "react-icons/bs";
+import { useMeetContext } from "./MeetContext";
 
 const StepThree: React.FC = () => {
+  // Use the shared context
+  const { submitMeetData, resetForm, isLoading, meetData } = useMeetContext();
+
+  // Check if all required fields are filled
+  const isFormValid = () => {
+    return (
+      meetData.meetDate &&
+      meetData.meetName &&
+      meetData.meetLocation &&
+      meetData.resultsFile
+    );
+  };
+
   return (
     <div className="flex flex-col md:flex-row items-start bg-gray-800 text-white rounded-lg p-6 gap-6">
       {/* Circle with Number */}
@@ -13,9 +27,32 @@ const StepThree: React.FC = () => {
 
       {/* Form Inputs */}
       <div className="flex flex-col gap-4 flex-grow basis-3/4">
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
-          Submit
-        </button>
+        <div className="flex gap-4">
+          <button 
+            onClick={submitMeetData}
+            disabled={!isFormValid() || isLoading}
+            className={`${
+              isFormValid() && !isLoading
+                ? "bg-blue-500 hover:bg-blue-700" 
+                : "bg-gray-500 cursor-not-allowed"
+            } text-white font-bold py-2 px-4 rounded-lg flex-1`}
+          >
+            {isLoading ? "Processing..." : "Submit"}
+          </button>
+          
+          <button 
+            onClick={resetForm}
+            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg flex-1"
+          >
+            Reset
+          </button>
+        </div>
+        
+        {!isFormValid() && (
+          <p className="text-yellow-400 text-sm">
+            Please complete all required fields (meet date, name, location, and upload a file).
+          </p>
+        )}
       </div>
     </div>
   );

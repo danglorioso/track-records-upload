@@ -1,16 +1,16 @@
 'use client';
 
-import { useState } from "react";
 import { Bs2Circle } from "react-icons/bs";
+import { useMeetContext } from "./MeetContext";
 
 const StepTwo: React.FC = () => {
-  // Store state of uploaded file
-  const [file, setFile] = useState<File | null>(null); 
+  // Use the shared context
+  const { meetData, updateMeetData } = useMeetContext();
 
   // Handle file selection
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files ? e.target.files[0] : null;
-    setFile(selectedFile);
+    updateMeetData('resultsFile', selectedFile);
   };
 
   return (
@@ -34,9 +34,9 @@ const StepTwo: React.FC = () => {
             onChange={handleFileChange}
             className="w-full mt-1 p-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          {file && (
+          {meetData.resultsFile && (
             <p className="text-sm text-gray-300 mt-2">
-              {file.name} selected
+              {meetData.resultsFile.name} selected
             </p>
           )}
         </div>
