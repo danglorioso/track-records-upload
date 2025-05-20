@@ -1,7 +1,7 @@
 {
   "functions": {
-    "api/python-parser/*.py": {
-      "runtime": "@vercel/python@3.1.0"
+    "api/*.py": {
+      "runtime": "vercel-python@0.5.0"
     }
   }
 }

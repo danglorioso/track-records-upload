@@ -1,5 +1,5 @@
 import Instructions from "./components/Instructions";
-import Footer from "./Footer";
+import Footer from "./components/Footer";
 
 export default function Home() {
   return (
