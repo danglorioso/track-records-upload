@@ -14,7 +14,7 @@ const SuccessView: React.FC = () => {
       <p className="text-green-100 mb-4">
         Meet data was successfully processed and saved.
       </p>
-      
+{/*       
       <div className="bg-green-700 p-3 rounded mb-4">
         <h4 className="font-semibold text-white">Meet Details:</h4>
         <ul className="text-green-100 mt-2">
@@ -30,7 +30,7 @@ const SuccessView: React.FC = () => {
         <p className="text-green-100">
           {apiResponse.results?.eventCount || 0} events and {apiResponse.results?.athleteCount || 0} athletes processed.
         </p>
-      </div>
+      </div> */}
       
       <button 
         onClick={resetForm}

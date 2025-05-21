@@ -6,8 +6,8 @@ import sys
 from typing import List, Dict
 from rapidfuzz import fuzz, process
 
-from standard_events import STANDARD_EVENTS
-from standard_schools import STANDARD_SCHOOLS
+from .standard_events import STANDARD_EVENTS
+from .standard_schools import STANDARD_SCHOOLS
 
 def normalize_event(event_name: str, review_bool: bool) -> str:
     """
@@ -230,26 +230,26 @@ def parse_name(full_name: str):
         if len(parts) > 1:
             return " ".join(parts[1:]), parts[0]
 
-if __name__ == "__main__":
-    '''
-    Main function to parse the results file.
-    '''
+# if __name__ == "__main__":
+#     '''
+#     Main function to parse the results file.
+#     '''
 
-    # Check for file path argument
-    if len(sys.argv) < 2:
-        print("Usage: python3 parse_file.py <results_file>")
-        sys.exit(1)
+#     # Check for file path argument
+#     if len(sys.argv) < 2:
+#         print("Usage: python3 parse_file.py <results_file>")
+#         sys.exit(1)
     
-    # Example metadata
-    metadata = {
-        "Meet Date": "2023-01-01",
-        "Meet Location": "Sample Location",
-        "Edition": "1st",
-        "Meet Name": "Sample Meet",
-        "Timing": "FAT",
-        "URL": "http://example.com",
-        "Season": "Indoor"
-    }
+#     # Example metadata
+#     metadata = {
+#         "Meet Date": "2023-01-01",
+#         "Meet Location": "Sample Location",
+#         "Edition": "1st",
+#         "Meet Name": "Sample Meet",
+#         "Timing": "FAT",
+#         "URL": "http://example.com",
+#         "Season": "Indoor"
+#     }
 
-    # Call main function to parse results
-    parse_results(sys.argv[1], metadata)
+#     # Call main function to parse results
+#     parse_results(sys.argv[1], metadata)
