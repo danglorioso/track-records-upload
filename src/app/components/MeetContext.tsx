@@ -79,8 +79,7 @@ export const MeetProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       });
 
       // Make the API call to your Python parser
-      // const response = await fetch('/api/parse-results', {
-      const response = await fetch('http://localhost:8000/parse-results', {
+      const response = await fetch('https://track-api-pbqe.onrender.com', {
         method: 'POST',
         body: formData,
         // Don't set Content-Type header when using FormData, 
