@@ -96,3 +96,4 @@ def handler(request, response):
         return response.json({ "success": True, "results": rows })
     except Exception as e:
         return response.status(500).json({ "success": False, "error": str(e) })
+
