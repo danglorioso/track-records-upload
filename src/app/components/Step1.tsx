@@ -21,7 +21,7 @@ const StepOne: React.FC = () => {
         {/* Meet Date */}
         <div>
           <label htmlFor="meetDate" className="block text-md font-medium text-gray-400">
-            Meet Date
+            Meet Date*
           </label>
           <input
             type="date"
@@ -69,7 +69,7 @@ const StepOne: React.FC = () => {
         {/* Meet Name */}
         <div>
           <label htmlFor="meetName" className="block text-md font-medium text-gray-400">
-            Meet Name
+            Meet Name*
           </label>
           <input
             type="text"
@@ -84,7 +84,7 @@ const StepOne: React.FC = () => {
         {/* Meet Location */}
         <div>
           <label htmlFor="meetLocation" className="block text-md font-medium text-gray-400">
-            Meet Location
+            Meet Location*
           </label>
           <input
             type="text"

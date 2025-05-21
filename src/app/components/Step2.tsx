@@ -26,7 +26,7 @@ const StepTwo: React.FC = () => {
         {/* File Upload */}
         <div>
           <label htmlFor="file-upload" className="block text-md font-medium text-gray-400">
-            Upload Results
+            Upload Results*
           </label>
           <input
             type="file"

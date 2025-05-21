@@ -1,10 +1,9 @@
 'use client'
 
-import React from 'react'
-import Options from './Step1'
-import Results from './Step2'
-import Submit from './Step3'
-import SuccessView from './SuccessView'
+import React from 'react';
+import Options from './Step1';
+import Results from './Step2';
+import Submit from './Step3';
 import { FaRunning } from "react-icons/fa";
 import { MeetProvider } from './MeetContext'
 
@@ -26,11 +25,6 @@ const Instructions = () => {
 
         {/* Step 3 */}
         <Submit />
-        
-        {/* Success View (conditionally rendered) */}
-        <div className="p-4">
-          <SuccessView />
-        </div>
       </div>
     </MeetProvider>
   );
