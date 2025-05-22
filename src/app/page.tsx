@@ -3,13 +3,15 @@ import Footer from "./components/Footer";
 
 export default function Home() {
   return (
-    <div className="bg-gray-900 min-h-screen flex flex-col items-center justify-between">
-      {/* Instructions in the center */}
-      <div className="flex flex-col items-center justify-center w-full px-4 flex-1">
-        <Instructions />
+    <div className="bg-gray-900 h-screen overflow-hidden flex flex-col">
+      {/* Centered Instructions */}
+      <div className="flex-1 flex items-center justify-center min-h-0">
+        <div className="transform scale-90 w-full max-w-4xl">
+          <Instructions />
+        </div>
       </div>
 
-      {/* Footer - always at bottom */}
+      {/* Sticky Footer */}
       <Footer />
     </div>
   );
