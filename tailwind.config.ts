@@ -12,7 +12,18 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      keyframes: {
+        runIn: {
+          '0%': { transform: 'translateX(-100%) scale(0.5)', opacity: '0' },
+          '60%': { transform: 'translateX(20%) scale(1.1)', opacity: '1' },
+          '100%': { transform: 'translateX(0) scale(1)', opacity: '1' },
+        },
+      },
+      animation: {
+        'run-in-once': 'runIn 1s ease-out forwards',
+      },
     },
   },
   plugins: [],
 } satisfies Config;
+
