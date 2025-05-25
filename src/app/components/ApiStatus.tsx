@@ -56,7 +56,7 @@ export default function ApiStatus() {
 
   return (
     <div
-      className="fixed top-2 left-2 flex items-center gap-2 text-sm text-white-700 bg-blue/70 px-3 py-1 rounded-full shadow border border-gray-400 z-50 cursor-pointer hover:bg-blue"
+      className="fixed top-2 left-2 flex items-center gap-2 text-sm text-white bg-blue/70 px-3 py-1 rounded-full shadow border border-gray-400 z-50 cursor-pointer hover:bg-blue"
       onClick={status === 'offline' ? wakeApi : undefined}
     >
       <span className={`w-2.5 h-2.5 rounded-full ${color}`} />
