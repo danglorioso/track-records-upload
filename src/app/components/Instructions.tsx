@@ -10,8 +10,8 @@ import { MeetProvider } from './MeetContext'
 const Instructions = () => {
   return (
     <MeetProvider>
-      <div className="bg-gray-800 rounded-xl overflow-hidden shadow-lg">
-        <div className="bg-gray-700 text-white p-4 text-center text-xl font-semibold flex items-center justify-center gap-2">
+      <div className="bg-gray-800 rounded-xl shadow-lg">
+        <div className="bg-gray-700 text-white p-4 text-center text-xl rounded-t-xl font-semibold flex items-center justify-center gap-2">
           <FaRunning className="text-2xl animate-run-in-once" />
           <h1>Track Records Upload</h1>
         </div>
